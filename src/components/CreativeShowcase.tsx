@@ -83,77 +83,129 @@ export const CreativeShowcase: React.FC = () => {
         {selectedCategory === 'all' && (
           <div className="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Featured Video Card */}
-            <div className="relative rounded-3xl p-6 sm:p-8 bg-[#0A0A0A] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden group">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[9px] font-mono-code uppercase tracking-widest bg-black/60 px-3 py-1 rounded-full border border-white/20 text-purple-300">
-                  Featured Video Edit
-                </span>
-                <span className="text-[10px] font-mono-code text-white/40">Premiere & After Effects</span>
-              </div>
+            {(() => {
+              const featVideo = works.find((w) => w.id === 'video-1') || works[0];
+              return (
+                <div className="relative rounded-3xl p-6 sm:p-8 bg-[#0A0A0A] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden group flex flex-col justify-between">
+                  <div>
+                    <div className="flex items-center justify-between mb-4">
+                      <div className="flex items-center gap-2">
+                        <span className="text-[9px] font-mono-code uppercase tracking-widest bg-purple-500/20 px-3 py-1 rounded-full border border-purple-500/30 text-purple-300 font-bold">
+                          ★ Featured Video Edit
+                        </span>
+                        {featVideo.duration && (
+                          <span className="text-[10px] font-mono-code text-white/70 bg-white/5 px-2 py-0.5 rounded-full border border-white/10">
+                            {featVideo.duration} Reel
+                          </span>
+                        )}
+                      </div>
+                      <span className="text-[10px] font-mono-code text-white/50">{featVideo.softwareUsed?.slice(0, 2).join(' & ')}</span>
+                    </div>
 
-              <div className="relative aspect-video w-full rounded-2xl bg-gradient-to-tr from-purple-900/40 to-pink-900/40 border border-white/5 overflow-hidden mb-6 flex flex-col items-center justify-center p-4 text-center group-hover:border-purple-500/40 transition-colors">
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
-                <div className="relative z-10 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform">
-                  <Play className="w-5 h-5 ml-0.5 fill-black" />
+                    <div
+                      onClick={() => setSelectedItem(featVideo)}
+                      className="relative aspect-video w-full rounded-2xl bg-gradient-to-tr from-purple-900/40 to-pink-900/40 border border-white/10 overflow-hidden mb-6 flex flex-col items-center justify-center p-4 text-center group-hover:border-purple-500/50 transition-all cursor-pointer group/thumb shadow-lg"
+                    >
+                      {featVideo.imageUrl || featVideo.bannerUrl ? (
+                        <>
+                          <img
+                            src={featVideo.bannerUrl || featVideo.imageUrl}
+                            alt={featVideo.title}
+                            referrerPolicy="no-referrer"
+                            className="absolute inset-0 w-full h-full object-cover object-center group-hover/thumb:scale-105 transition-transform duration-700 brightness-90 group-hover/thumb:brightness-100"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/30 to-black/20" />
+                          <div className="relative z-10 w-14 h-14 rounded-full bg-white/90 group-hover/thumb:bg-white text-black flex items-center justify-center mb-3 shadow-[0_0_30px_rgba(255,255,255,0.6)] group-hover/thumb:scale-110 transition-all">
+                            <Play className="w-6 h-6 ml-0.5 fill-black" />
+                          </div>
+                          <div className="relative z-10 flex flex-col items-center gap-1">
+                            <span className="px-3 py-1 rounded-full bg-black/80 backdrop-blur-md text-white font-mono-code text-[10px] uppercase tracking-wider border border-white/20">
+                              Nalanda Institute of Technology
+                            </span>
+                            {featVideo.soundtrack && (
+                              <span className="text-[10px] text-purple-300 font-mono-code bg-black/60 px-2.5 py-0.5 rounded-full border border-purple-500/30">
+                                🎵 {featVideo.soundtrack}
+                              </span>
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+                          <div className="relative z-10 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform">
+                            <Play className="w-5 h-5 ml-0.5 fill-black" />
+                          </div>
+                          <span className="relative z-10 px-3 py-1 rounded-full bg-black/60 text-white/90 font-mono-code text-[10px] uppercase tracking-wider border border-white/20">
+                            {featVideo.thumbnailPlaceholderText}
+                          </span>
+                        </>
+                      )}
+                    </div>
+
+                    <h3 className="font-heading text-xl sm:text-2xl font-bold text-white mb-2">
+                      {featVideo.title}
+                    </h3>
+                    <p className="text-xs sm:text-sm text-white/60 mb-6 leading-relaxed">
+                      {featVideo.description}
+                    </p>
+                  </div>
+
+                  <div>
+                    <button
+                      id="view-featured-video-btn"
+                      onClick={() => setSelectedItem(featVideo)}
+                      className="px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider text-black bg-white hover:bg-purple-400 hover:text-white transition-all duration-300 shadow-md cursor-pointer inline-flex items-center gap-2"
+                    >
+                      <span>Watch Reel & Breakdown</span>
+                      <ArrowUpRight className="w-3.5 h-3.5" />
+                    </button>
+                  </div>
                 </div>
-                <span className="relative z-10 px-3 py-1 rounded-full bg-black/60 text-white/90 font-mono-code text-[10px] uppercase tracking-wider border border-white/20">
-                  [ADD VIDEO THUMBNAIL HERE]
-                </span>
-                <p className="relative z-10 text-[10px] text-white/50 mt-2 font-mono-code">Cinematic Video Edit Concept</p>
-              </div>
-
-              <h3 className="font-heading text-xl sm:text-2xl font-bold text-white mb-2">
-                Cinematic Video Edit
-              </h3>
-              <p className="text-xs sm:text-sm text-white/60 mb-6 leading-relaxed">
-                Dynamic pacing, seamless speed ramps, atmospheric sound design, and color grading tuned for storytelling impact.
-              </p>
-
-              <button
-                id="view-featured-video-btn"
-                onClick={() => setSelectedItem(works.find((w) => w.id === 'video-1') || works[0])}
-                className="px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider text-black bg-white hover:bg-purple-400 hover:text-white transition-all duration-300 shadow-md cursor-pointer inline-flex items-center gap-2"
-              >
-                <span>Inspect Video Details</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
+              );
+            })()}
 
             {/* Featured Design Card */}
-            <div className="relative rounded-3xl p-6 sm:p-8 bg-[#0A0A0A] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden group">
-              <div className="flex items-center justify-between mb-4">
-                <span className="text-[9px] font-mono-code uppercase tracking-widest bg-black/60 px-3 py-1 rounded-full border border-white/20 text-pink-300">
-                  Featured Poster Art
-                </span>
-                <span className="text-[10px] font-mono-code text-white/40">Photoshop & Illustrator</span>
-              </div>
-
-              <div className="relative aspect-video w-full rounded-2xl bg-zinc-900 border border-white/5 overflow-hidden mb-6 flex flex-col items-center justify-center p-4 text-center group-hover:border-pink-500/40 transition-colors">
-                <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
-                <div className="relative z-10 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(255,255,255,0.4)] group-hover:scale-110 transition-transform">
-                  <Palette className="w-5 h-5" />
+            <div className="relative rounded-3xl p-6 sm:p-8 bg-[#0A0A0A] border border-white/10 shadow-[0_20px_50px_rgba(0,0,0,0.6)] overflow-hidden group flex flex-col justify-between">
+              <div>
+                <div className="flex items-center justify-between mb-4">
+                  <span className="text-[9px] font-mono-code uppercase tracking-widest bg-pink-500/20 px-3 py-1 rounded-full border border-pink-500/30 text-pink-300 font-bold">
+                    ★ Featured Poster Art
+                  </span>
+                  <span className="text-[10px] font-mono-code text-white/40">Photoshop & Illustrator</span>
                 </div>
-                <span className="relative z-10 px-3 py-1 rounded-full bg-black/60 text-white/90 font-mono-code text-[10px] uppercase tracking-wider border border-white/20">
-                  [ADD DESIGN IMAGE HERE]
-                </span>
-                <p className="relative z-10 text-[10px] text-white/50 mt-2 font-mono-code">Creative Poster Design Concept</p>
+
+                <div
+                  onClick={() => setSelectedItem(works.find((w) => w.id === 'design-1') || works[8])}
+                  className="relative aspect-video w-full rounded-2xl bg-zinc-900 border border-white/5 overflow-hidden mb-6 flex flex-col items-center justify-center p-4 text-center group-hover:border-pink-500/40 transition-colors cursor-pointer group/thumb"
+                >
+                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors" />
+                  <div className="relative z-10 w-12 h-12 rounded-full bg-white text-black flex items-center justify-center mb-3 shadow-[0_0_20px_rgba(255,255,255,0.4)] group-hover/thumb:scale-110 transition-transform">
+                    <Palette className="w-5 h-5" />
+                  </div>
+                  <span className="relative z-10 px-3 py-1 rounded-full bg-black/60 text-white/90 font-mono-code text-[10px] uppercase tracking-wider border border-white/20">
+                    [ADD DESIGN IMAGE HERE]
+                  </span>
+                  <p className="relative z-10 text-[10px] text-white/50 mt-2 font-mono-code">Creative Poster Design Concept</p>
+                </div>
+
+                <h3 className="font-heading text-xl sm:text-2xl font-bold text-white mb-2">
+                  Creative Poster Design
+                </h3>
+                <p className="text-xs sm:text-sm text-white/60 mb-6 leading-relaxed">
+                  Futuristic typography hierarchy, high-contrast neon lighting, and layered digital compositing.
+                </p>
               </div>
 
-              <h3 className="font-heading text-xl sm:text-2xl font-bold text-white mb-2">
-                Creative Poster Design
-              </h3>
-              <p className="text-xs sm:text-sm text-white/60 mb-6 leading-relaxed">
-                Futuristic typography hierarchy, high-contrast neon lighting, and layered digital compositing.
-              </p>
-
-              <button
-                id="view-featured-design-btn"
-                onClick={() => setSelectedItem(works.find((w) => w.id === 'design-1') || works[8])}
-                className="px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider text-black bg-white hover:bg-pink-400 hover:text-white transition-all duration-300 shadow-md cursor-pointer inline-flex items-center gap-2"
-              >
-                <span>Inspect Design Details</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
+              <div>
+                <button
+                  id="view-featured-design-btn"
+                  onClick={() => setSelectedItem(works.find((w) => w.id === 'design-1') || works[8])}
+                  className="px-6 py-3 rounded-full font-bold text-xs uppercase tracking-wider text-black bg-white hover:bg-pink-400 hover:text-white transition-all duration-300 shadow-md cursor-pointer inline-flex items-center gap-2"
+                >
+                  <span>Inspect Design Details</span>
+                  <ArrowUpRight className="w-3.5 h-3.5" />
+                </button>
+              </div>
             </div>
           </div>
         )}
@@ -175,18 +227,43 @@ export const CreativeShowcase: React.FC = () => {
                 >
                   <div>
                     {/* Thumbnail Box */}
-                    <div className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 to-transparent border border-white/5 flex flex-col items-center justify-center p-3 text-center mb-4 group-hover:border-purple-500/40 transition-colors">
-                      <div className="absolute inset-0 bg-black/20" />
+                    <div
+                      onClick={() => setSelectedItem(work)}
+                      className="relative aspect-video w-full rounded-2xl overflow-hidden bg-gradient-to-br from-white/5 to-transparent border border-white/5 flex flex-col items-center justify-center p-3 text-center mb-4 group-hover:border-purple-500/40 transition-colors cursor-pointer group/cardthumb"
+                    >
+                      {work.imageUrl ? (
+                        <>
+                          <img
+                            src={work.imageUrl}
+                            alt={work.title}
+                            referrerPolicy="no-referrer"
+                            className="absolute inset-0 w-full h-full object-cover object-center group-hover/cardthumb:scale-105 transition-transform duration-500"
+                          />
+                          <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                          <div className="relative z-10 w-9 h-9 rounded-full bg-white/90 group-hover/cardthumb:bg-white text-black flex items-center justify-center shadow-lg transition-transform group-hover/cardthumb:scale-110">
+                            {isVideo ? <Play className="w-4 h-4 ml-0.5 fill-black" /> : <Palette className="w-4 h-4" />}
+                          </div>
+                          {work.duration && (
+                            <span className="absolute bottom-2 right-2 text-[9px] font-mono-code px-2 py-0.5 rounded-full bg-black/80 text-white/90 border border-white/20">
+                              {work.duration}
+                            </span>
+                          )}
+                        </>
+                      ) : (
+                        <>
+                          <div className="absolute inset-0 bg-black/20" />
 
-                      {/* Icon */}
-                      <div className="relative z-10 w-8 h-8 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition-transform">
-                        {isVideo ? <Play className="w-3.5 h-3.5 ml-0.5 fill-white" /> : <Palette className="w-3.5 h-3.5" />}
-                      </div>
+                          {/* Icon */}
+                          <div className="relative z-10 w-8 h-8 rounded-lg bg-white/10 border border-white/10 flex items-center justify-center text-white mb-2 group-hover:scale-110 transition-transform">
+                            {isVideo ? <Play className="w-3.5 h-3.5 ml-0.5 fill-white" /> : <Palette className="w-3.5 h-3.5" />}
+                          </div>
 
-                      {/* Required explicit placeholder label */}
-                      <span className="relative z-10 text-[9px] font-mono-code px-2 py-0.5 rounded-full bg-black/60 text-white/80 border border-white/10 text-center leading-tight">
-                        {work.thumbnailPlaceholderText}
-                      </span>
+                          {/* Required explicit placeholder label */}
+                          <span className="relative z-10 text-[9px] font-mono-code px-2 py-0.5 rounded-full bg-black/60 text-white/80 border border-white/10 text-center leading-tight">
+                            {work.thumbnailPlaceholderText}
+                          </span>
+                        </>
+                      )}
                     </div>
 
                     {/* Meta category badge */}

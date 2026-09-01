@@ -14,6 +14,13 @@ export interface WorkItem {
   softwareUsed?: string[];
   previewType?: 'video' | 'image' | 'design';
   highlights?: string[];
+  imageUrl?: string;
+  bannerUrl?: string;
+  videoUrl?: string;
+  soundtrack?: string;
+  duration?: string;
+  clientOrContext?: string;
+  keyMoments?: { time: string; label: string; desc: string }[];
 }
 
 export interface SkillItem {
@@ -61,6 +68,8 @@ export interface PortfolioData {
     location: string;
     profilePlaceholder: string;
     avatarUrl?: string;
+    heroAvatarUrl?: string;
+    aboutPhotoUrl?: string;
   };
   skills: {
     programming: SkillItem[];

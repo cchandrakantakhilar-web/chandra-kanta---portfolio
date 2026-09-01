@@ -57,31 +57,34 @@ export const About: React.FC = () => {
           <div className="lg:col-span-7 space-y-6">
             <div className="p-8 sm:p-10 rounded-3xl bg-[#0A0A0A] border border-white/10 backdrop-blur-xl shadow-[0_20px_50px_rgba(0,0,0,0.6)] relative overflow-hidden">
               {/* Photo & Intro Header */}
-              {personalInfo.avatarUrl && (
-                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 pb-6 mb-6 border-b border-white/5">
+              {(personalInfo.aboutPhotoUrl || personalInfo.avatarUrl) && (
+                <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 sm:gap-8 pb-8 mb-8 border-b border-white/10">
                   <div className="relative shrink-0 group">
-                    <div className="absolute -inset-1 rounded-2xl bg-gradient-to-tr from-purple-500 to-pink-500 opacity-50 blur-sm group-hover:opacity-80 transition-opacity" />
-                    <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-2xl overflow-hidden border border-white/20 bg-black">
+                    {/* Glowing Accent Border */}
+                    <div className="absolute -inset-1 rounded-3xl bg-gradient-to-tr from-purple-500 via-fuchsia-500 to-pink-500 opacity-60 blur-md group-hover:opacity-90 transition-opacity duration-500" />
+                    <div className="relative w-36 h-36 sm:w-44 sm:h-44 md:w-48 md:h-48 rounded-3xl overflow-hidden border-2 border-white/20 bg-black shadow-2xl">
                       <img
-                        src={personalInfo.avatarUrl}
+                        src={personalInfo.aboutPhotoUrl || personalInfo.avatarUrl}
                         alt={personalInfo.name}
                         referrerPolicy="no-referrer"
-                        className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                        className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700 brightness-95 group-hover:brightness-100"
                       />
                     </div>
                   </div>
-                  <div className="text-center sm:text-left space-y-1.5 flex-1">
-                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/10 border border-purple-500/20 text-purple-300 text-xs font-mono-code">
+                  <div className="text-center sm:text-left space-y-2.5 flex-1 flex flex-col justify-center pt-1">
+                    <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-500/15 border border-purple-500/30 text-purple-300 text-xs font-mono-code w-fit mx-auto sm:mx-0">
+                      <span className="w-1.5 h-1.5 rounded-full bg-green-400 animate-pulse" />
                       <span>{personalInfo.status}</span>
                     </div>
-                    <h3 className="text-xl font-bold text-white">
+                    <h3 className="text-2xl sm:text-3xl font-heading font-bold text-white tracking-tight">
                       {personalInfo.name}
                     </h3>
-                    <p className="text-xs text-white/50 leading-relaxed">
+                    <p className="text-xs sm:text-sm text-purple-200/90 font-medium leading-relaxed">
                       {personalInfo.primaryRole}
                     </p>
-                    <p className="text-[11px] text-purple-400/80 font-mono-code pt-0.5">
-                      📍 {personalInfo.location}
+                    <p className="text-xs text-white/60 font-mono-code flex items-center justify-center sm:justify-start gap-1.5 pt-0.5">
+                      <span>📍</span>
+                      <span>{personalInfo.location}</span>
                     </p>
                   </div>
                 </div>

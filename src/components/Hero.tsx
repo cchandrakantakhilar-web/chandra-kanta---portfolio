@@ -130,9 +130,9 @@ export const Hero: React.FC<HeroProps> = ({ onExploreWork, onContactClick }) => 
                 
                 {/* Photo container */}
                 <div className="relative w-28 h-28 sm:w-32 sm:h-32 rounded-full overflow-hidden border-2 border-white/30 bg-[#0d091a] shadow-xl">
-                  {personalInfo.avatarUrl ? (
+                  {(personalInfo.heroAvatarUrl || personalInfo.avatarUrl) ? (
                     <img
-                      src={personalInfo.avatarUrl}
+                      src={personalInfo.heroAvatarUrl || personalInfo.avatarUrl}
                       alt={personalInfo.name}
                       referrerPolicy="no-referrer"
                       className="w-full h-full object-cover object-top group-hover/avatar:scale-105 transition-transform duration-500"
