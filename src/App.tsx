@@ -5,6 +5,7 @@ import { Hero } from './components/Hero';
 import { About } from './components/About';
 import { Skills } from './components/Skills';
 import { CreativeShowcase } from './components/CreativeShowcase';
+import { CreativeComponents } from './components/CreativeComponents';
 import { Certificates } from './components/Certificates';
 import { Education } from './components/Education';
 import { Contact } from './components/Contact';
@@ -14,7 +15,7 @@ export default function App() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    const sectionIds = ['home', 'about', 'skills', 'work', 'certificates', 'education', 'contact'];
+    const sectionIds = ['home', 'about', 'skills', 'work', 'creative-friends', 'certificates', 'education', 'contact'];
 
     const handleScroll = () => {
       const scrollPosition = window.scrollY + 200;
@@ -67,6 +68,7 @@ export default function App() {
         <About />
         <Skills />
         <CreativeShowcase />
+        <CreativeComponents />
         <Certificates />
         <Education />
         <Contact />
